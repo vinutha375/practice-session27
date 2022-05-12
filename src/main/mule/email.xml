@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="259d9ce5-8478-4032-aa66-c3017828e688" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="1bd5892a-d997-4525-a290-371997b167d1" >
+		<email:smtp-connection host="smtp.gmail.com" port="587" user="vinuthatgowda119@gmail.com" password="9108116976V" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<email:smtp-config name="Email_SMTP1" doc:name="Email SMTP" doc:id="fe6cd0bf-6ef8-482e-92e6-04e875cb1830" >
+		<email:smtp-connection host="smtp.gmail.com" port="587" user="vinuthatgowda119@gmail.com" password="9108116976V" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<flow name="emailFlow" doc:id="9764e8d3-ceb5-463a-b45f-58f76e98d089" >
+		<http:listener doc:name="Listener" doc:id="3cef1fe9-eab2-4c71-b082-ff7a082de1a6" config-ref="HTTP_Listener_config" path="/email"/>
+		<logger level="INFO" doc:name="Logger" doc:id="851b172e-0caf-431a-b3d6-122813e5fd79" message="before email sent"/>
+		<email:send doc:name="Send" doc:id="1055f68c-d5d0-4e6e-887a-0b152b21db1e" config-ref="Email_SMTP1" fromAddress="vinuthatgowda119@gmail.com" subject="mulesoft">
+			<email:to-addresses >
+				<email:to-address value="vinuthagowda375@gmail.com" />
+			</email:to-addresses>
+			<email:cc-addresses >
+				<email:cc-address value="vinuthatgowda119@gmail.com" />
+			</email:cc-addresses>
+			<email:body >
+				<email:content ><![CDATA["welcome"]]></email:content>
+			</email:body>
+		</email:send>
+	</flow>
+</mule>
